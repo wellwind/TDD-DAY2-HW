@@ -28,6 +28,27 @@ namespace ShoppingCartLib
             Price = 0;
 
             // 將書依照數量單本展開
+            var sepreatedBooks = getSepretedBookListFromExistBooks();
+
+            // 將展開的清單取distinct物件群組, 加入運費計算後從清單移除
+            caculatePriceBySepreatedBooks(sepreatedBooks);
+        }
+
+        private void caculatePriceBySepreatedBooks(List<Book> sepreatedBooks)
+        {
+            while (sepreatedBooks.Any())
+            {
+                var distinctBooks = sepreatedBooks.Distinct(new BookComparer()).ToList();
+                Price += caculateDiscountPrice(distinctBooks);
+                foreach (var caculatedBook in distinctBooks)
+                {
+                    sepreatedBooks.Remove(caculatedBook);
+                }
+            }
+        }
+
+        private List<Book> getSepretedBookListFromExistBooks()
+        {
             var sepreatedBooks = new List<Book>();
             foreach (var book in _books)
             {
@@ -38,16 +59,7 @@ namespace ShoppingCartLib
                     sepreatedBooks.Add(tmpBook);
                 }
             }
-            // 將展開的清單取distinct物件群組, 加入運費計算後從清單移除
-            while (sepreatedBooks.Any())
-            {
-                var distinctBooks = sepreatedBooks.Distinct(new BookComparer()).ToList();
-                Price += caculateDiscountPrice(distinctBooks);
-                foreach (var caculatedBook in distinctBooks)
-                {
-                    sepreatedBooks.Remove(caculatedBook);
-                }
-            }
+            return sepreatedBooks;
         }
 
         private decimal caculateDiscountPrice(IEnumerable<Book> books)
