@@ -19,7 +19,7 @@ namespace ShoppingCartLib
 
         public void CaculatePrice()
         {
-            // TODO: caculate price
+            Price = _books.Sum(book => book.Price * book.Amount);
         }
     }
 }
