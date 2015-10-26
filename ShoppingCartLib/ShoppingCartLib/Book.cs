@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingCartLib
 {
-    public class Book
+    public class Book : ICloneable
     {
         public int Id { get; set; }
 
@@ -15,5 +15,16 @@ namespace ShoppingCartLib
         public int Price { get; set; }
 
         public int Amount { get; set; }
+
+        public object Clone()
+        {
+            return new Book()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Price = this.Price,
+                Amount = this.Price
+            };
+        }
     }
 }

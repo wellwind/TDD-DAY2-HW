@@ -164,5 +164,27 @@ namespace ShoppingCartLib.Tests
             // assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void CaculateFeeTest_計算運費後購物車內容不會消失()
+        {
+            // arrange
+            var target = new PotterShoppingCart();
+            var booksStub = new Book[]
+            {
+                new Book() { Id = 1, Name="哈利波特1", Amount = 1, Price = 100},
+                new Book() { Id = 2, Name="哈利波特2", Amount = 2, Price = 100},
+                new Book() { Id = 3, Name="哈利波特3", Amount = 2, Price = 100},
+            };
+            target.SetBooks(booksStub);
+            var expected = 5;
+
+            // act
+            target.CaculatePrice();
+            var actual = target.BookCount;
+
+            // assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
