@@ -25,7 +25,11 @@ namespace ShoppingCartLib
 
         private void caculateDiscountPrice()
         {
-            if (_books.Count() >= 4)
+            if (_books.Count() >= 5)
+            {
+                Price *= 0.75m;
+            }
+            else if (_books.Count() >= 4)
             {
                 Price *= 0.8m;
             }
