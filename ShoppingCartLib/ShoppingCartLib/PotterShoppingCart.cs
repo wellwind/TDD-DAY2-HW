@@ -20,6 +20,10 @@ namespace ShoppingCartLib
         public void CaculatePrice()
         {
             Price = _books.Sum(book => book.Price * book.Amount);
+            if (_books.Count() >= 2)
+            {
+                Price *= 0.95m;
+            }
         }
     }
 }
